@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList'
 const list =[
@@ -31,12 +32,23 @@ class App extends React.Component {
       taskName:''
     }
   }
- 
-  handleChanges = e => {
+
+  addTask = taskName => {
+    this.setState({
+      list: [...this.state.list, {
+        task: taskName,
+        id: uuidv4,
+        completed: false
+      }]
+    })
+  }
+
+  handleChange = e => {
     this.setState({ taskName: e.target.value })
   }
   handleSubmit = e => {
     e.preventDefault();
+    this.addTask(this.state.taskName)
 
   }
 
@@ -44,7 +56,7 @@ class App extends React.Component {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <TodoForm value={this.state.taskName} handleChanges={this.handleChanges} handleSubmit={this.handleSubmit}/>
+        <TodoForm value={this.state.taskName} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
         <TodoList list={this.state.list}/>
       </div>
     );
