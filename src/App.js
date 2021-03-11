@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components'
 import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList'
 const list =[
@@ -19,6 +20,17 @@ const list =[
   }
 
 ];
+
+const StyleApp = styled.div`
+margin: 5rem auto;
+width:50%;
+display:flex;
+flex-direction:column;
+align-items:center;
+background-color: #85B8AF;
+color:#FAFBFB;
+  
+`
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -66,11 +78,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <StyleApp>
         <h2>Welcome to your Todo App!</h2>
         <TodoForm value={this.state.taskName} handleChange={this.handleChange} handleSubmit={this.handleSubmit} clearCompleted={this.clearCompleted}/>
         <TodoList toggleCompleted={this.toggleCompleted}  list={this.state.list}/>
-      </div>
+      </StyleApp>
     );
   }
 }
