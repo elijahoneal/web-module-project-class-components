@@ -10,6 +10,7 @@ console.log(props)
                 value={props.value}
                 />
                 <button>Add</button>
+                <button onClick={props.clearCompleted}>Clear Completed</button>
             </form>
         )
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList'
 const list =[
@@ -37,7 +36,7 @@ class App extends React.Component {
     this.setState({
       list: [...this.state.list, {
         task: taskName,
-        id: uuidv4,
+        id: Date.now,
         completed: false
       }]
     })
@@ -49,15 +48,28 @@ class App extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.addTask(this.state.taskName)
+    this.setState({ taskName: '' })
 
+  }
+
+  toggleCompleted = taskId => {
+    this.setState({ list: this.state.list.map( task => {
+      if(task.id === taskId){
+        return{ ...task, completed: !task.completed}
+      }
+      return(task)
+    } ) })
+  }
+  clearCompleted = () => {
+    this.setState({ list: this.state.list.filter( task =>{ return !task.completed} )} )
   }
 
   render() {
     return (
       <div>
         <h2>Welcome to your Todo App!</h2>
-        <TodoForm value={this.state.taskName} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
-        <TodoList list={this.state.list}/>
+        <TodoForm value={this.state.taskName} handleChange={this.handleChange} handleSubmit={this.handleSubmit} clearCompleted={this.clearCompleted}/>
+        <TodoList toggleCompleted={this.toggleCompleted}  list={this.state.list}/>
       </div>
     );
   }
